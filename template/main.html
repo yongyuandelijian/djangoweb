@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>在线聊天系统主页面</title>
+	</head>
+	<body onload="jiazai()">
+		<!--页面先分为上下，然后下面的部分分为左右，然后右侧的部分分为上下-->
+		<div class="zongti">
+			<div class="dingbu">
+				<div class="dingbu-left"><span id="mingcheng"></span> <span>在线聊天系统欢迎你</span></div>
+				<div class="dingbu-right"><button onclick="zhuxiao()" style="background-color: blueviolet; color: white; border-width: 0px; font-size: large;">注销</button></div>
+			</div>
+			<div class="zhuti">
+				<div class="zhuti-left" name=""></div>
+				<div class="zhuti-right" name="">	
+					<div class="zhuti-ys"></div>
+					<div class="zhuti-yx">
+						<div class="zhuti-yx1">
+							<textarea class="input-message" onfocus="true" onkeydown="pdaj(event)"></textarea>
+						</div>
+						<div class="zhuti-yx2">
+							<span>Enter发送，Ctl+Enter换行</span>
+							<button onclick="fasongXiaoXi()" class="btn-fs">发送</button>
+						</div>		
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.zongti{
+				/*自身的样式*/
+				width: 50%;
+				margin: 5% auto;   /*上下距离10% 左右自动，这样就可以左右居中了*/
+				min-width: 500px;   /*最小宽度*/
+				min-height: 500px;
+				background-color: #e6e6e0;
+				border-radius: 3px;   /*圆角的半径*/
+				border: 1px solid rgb(194, 191, 191);
+				/*内部元素的布局*/
+				display: flex;
+				flex-direction: column;
+			}
+			.dingbu{
+				background-color: blueviolet;
+				margin: 0 auto;
+				width: 100%;
+				color: white;
+				height: 40px;
+				font-size: larger;
+				vertical-align: middle;
+				text-align: center;
+				display: flex;
+				flex-direction: row;
+			}
+			.dingbu-left{
+				width: 90%;
+				height: 100%;
+				min-width: 450px;
+				margin: 5px;
+			}
+			.dingbu-right{
+				flex-grow: 1;
+				min-width: 50px;
+				height: 100%;
+				margin: 5px;
+			}
+			.zhuti{
+				display: flex;
+				flex-direction: row;
+				flex-grow: 1;
+			}
+			.zhuti-left{
+				border-right: 1px solid #d4e2e2;
+				width: 25%;
+				height: 100%;
+				min-width: 100px;
+				min-height: 500px;
+			}
+			.zhuti-right{
+				border-left: 1px solid #d4e2e2;
+				flex-grow: 1;   /*剩下空间全部占用*/
+				height: 100%;
+				min-width: 400px;
+				min-height: 500px;
+				display: flex;
+				flex-direction: column;
+			}
+			.zhuti-ys{
+				margin: 0;
+				width: 100%;
+				height: 60%;
+				min-height: 300px;
+				border-bottom: 1px solid #d4e2e2;
+			}
+			.zhuti-yx{
+				background-color: white;
+				flex-grow: 1;
+				width: 100%;
+				height: 40%;
+				display: flex;
+				flex-direction: column;
+				min-height: 200px;
+				border-radius: 3px;
+			}
+			.zhuti-yx2{
+				height: 30px;
+				color: rgb(177, 173, 173); padding: 2px;
+				font-size: large;
+			}
+			.zhuti-yx1{
+				padding: 5px;
+				width: 100%;
+				min-height: 150px;
+				border: none;
+				flex-grow: 1;
+			}
+			.input-message{
+				resize: none;
+				width: 99%;
+				height: 99%;
+				min-height: 150px;		
+				border: none;
+			}
+			.input-message:focus{
+				outline:none;
+			}
+			.btn-fs{
+				color: rgb(177, 173, 173);
+				float: right; 
+				border:1px solid gray ; 
+				border-radius: 5px; 
+				height: 30px; 
+				width: 50px; 
+				font-size: large;
+			}
+		</style>
+		<script type="text/javascript">
+		//两个需要使用的公共变量，websocket地址
+			var ws;
+			var ws_url='ws://127.0.0.1:8000'
+			//窗口加载事件需要创建ws连接对象和各个状态下的处理
+			window.onload=function(e){
+				// 如果用户名已经被缓存那么将用户名写入页面，如果用户名不存在则让返回登陆页面
+				var mingzi=localStorage.getItem('nicheng');
+				// console.log('进入了加载页面')
+				// alert(mingzi)
+				if (mingzi){
+					// alert('内容已经修改')
+					document.getElementById('mingcheng').innerText='（'+mingzi+'）'
+				} else {
+					window.location.href="index"
+				}
+
+				//处理websocket的功能
+				ws=new WebSocket(ws_url);
+				//创建websocket在各个状体的事件
+				var xiaoxi;
+				ws.onopen=function(e){
+					xiaoxi='系统消息：websocket创建连接成功';
+					console.log(xiaoxi);
+					showMessage(xiaoxi);
+				}
+				ws.onmessage=function(e){
+					xiaoxi='系统消息：websocket收到的消息是:',e.data
+					console.log(xiaoxi);
+				}
+				ws.onclose=function(e){
+					xiaoxi='系统消息：websocket连接已经关闭';
+					console.log(xiaoxi);
+					showMessage(xiaoxi);
+				}
+				ws.onerror=function(e){
+					xiaoxi='系统消息：websocket连接出现错误',e;
+					console.log(xiaoxi);
+					showMessage(xiaoxi);
+				}
+			}
+
+			//显示消息到历史消息界面去
+			function showMessage(xiaoxi){
+				//发送消息的时候增加上当前时间，并且增加一个样式(样式稍后在增加)
+				var riqi=new Date();
+				shijian=riqi.getHours()+":"+riqi.getMinutes()+":"+riqi.getSeconds();
+				//获取控件存放消息
+				lishixiaoxi=document.getElementsByClassName('zhuti-ys')[0];
+				var messagep=document.createElement('p');
+				messagep.innerText=xiaoxi+"-"+shijian;
+				lishixiaoxi.appendChild(messagep)
+				return true;
+			}
+
+			// 判断文本框按下的快捷键
+			function pdaj(event){
+				// console.log(event) 
+				// 如果按下了enter需要判断ctrl是否被按下，如果按下，则是换行，否则就是直接发送消息
+				if (event.keyCode == '13'){
+					if (event.ctrlKey){
+						// 换行
+						var text=event.target.value
+						event.target.value=text+"\n";
+					}else{
+						// 阻止enter的本来换行功能
+						event.preventDefault();
+						// 发送消息，这个如果是传参也可以通过event中的target对象来获取value
+						fasongXiaoXi()
+					}
+
+				}
+			}
+
+			function fasongXiaoXi(){
+				// alert(ws.readyState)
+				// ws状态合理才能进行方法内容,注意常量的大小写
+				if (!ws){ return false;}
+				if (ws.readyState != ws.OPEN){return false;}
+				// 获取文本域的内容，然后在调用ws.send('xx')
+				var temp=document.getElementsByClassName('input-message');
+				neirong=temp[0].value
+				var xiaoxi=neirong.replace(/^\s*|\s*$/g,"")  // 去除左右侧的空格
+				//alert(xiaoxi)
+				if (xiaoxi){
+					// 文本有内容合法的情况下，发送消息
+					ws.send(xiaoxi);
+					console.log('消息发送成功！！！');
+					temp[0].value='';
+					showMessage(xiaoxi);
+					return true;
+				}else{
+					alert('不能发送空消息！！！');
+					return false;
+				}
+			}
+
+			//发现当设置了window.onload事件后，这个事件失去了功能
+			function jiazai(){
+				alert('jiazai')
+				// 如果用户名已经被缓存那么将用户名写入页面，如果用户名不存在则让返回登陆页面
+				var mingzi=localStorage.getItem('nicheng');
+				// console.log('进入了加载页面')
+				// alert(mingzi)
+				if (mingzi){
+					// alert('内容已经修改')
+					document.getElementById('mingcheng').innerText='（'+mingzi+'）'
+				} else {
+					window.location.href="index"
+				}
+			}
+			
+			// 注销操作，将页面退回到登陆页面，然后清除localstorage
+			function zhuxiao(){
+				//将websocket关键
+				if (ws){
+					if (ws.readystate==ws.OPEN){
+						ws.close();
+					}
+				}
+				// alert('进入注销操作')
+				localStorage.removeItem('nicheng')
+				window.location.href="index"
+			}
+		</script>
+	</body>
+</html>

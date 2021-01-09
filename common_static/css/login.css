@@ -1,0 +1,20 @@
+.dev_dl {
+    width: 500px;
+    height: 300px;
+    text-align: center;
+    vertical-align: middle;
+    margin: auto auto;
+    padding: 10 10 10 10;
+    font-size: 14px;
+    line-height: 50px;
+    color: rgb(19, 211, 105);
+    background-image: none;
+    border: 1px solid rgb(204, 204, 204);
+    background-color: white;
+    margin-top: 10%;
+}
+.btn_sub{
+width: 80px;
+height: 25px;
+color: rgb(22, 20, 20);
+}
