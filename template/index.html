@@ -1,14 +1,11 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>在线聊天系统</title>
-		<link rel="stylesheet" type="text/css" href="{% static  '/css/login.css' %}" >
-		<script type="text/javascript" src="{% static '/js/commonjs.js' %}"></script>
+		<title>在线聊天系统</title>		
 		<!-- link rel="icon" href="{% static "titile.ico"%}" -->		
 	</head>
-	<body onload="jiazai()">
+	<body style="background-image: linear-gradient(to right,#7A88FF, #7AFFAF);" onload="jiazai()">
 		<div class="dev_dl">
 			<form name="login-form" action="zhuye" method="POST" onsubmit="return login()">
 				<!-- 增加这个是为了告诉django通过跨站攻击的防护 -->
@@ -21,64 +18,8 @@
 				<input type="submit" name="btn_submit" class="btn_sub" value="提&nbsp;&nbsp;&nbsp;&nbsp;交" />
 			</form>
 		</div>
-		<style type="text/css">
-			body{
-				background-image: linear-gradient(to right,#7A88FF, #7AFFAF); /*设置渐变色的背景来临时生成图片*/
-			}
-			.dev_dl {
-					width: 500px;
-					height: 300px;
-					text-align: center;
-					vertical-align: middle;
-					margin: auto auto;
-					padding: 10 10 10 10;
-					font-size: 16px;
-					line-height: 50px;
-					color: rgb(241, 241, 241);
-					/*background-image: none; 这一句是否存在并没有台大影响*/
-					border: 1px solid rgb(204, 204, 204);
-					margin-top: 10%;
-					border-radius: 5px;
-				}
-			.btn_sub{
-				width: 80px;
-				height: 25px;
-				font-size: 14px;
-				color: rgb(241, 241, 241);
-				background-color:initial;
-				border: 1px solid rgb(204, 204, 204);
-				border-radius: 3px;
-				}
-			.btn_sub:hover{
-				font-size: 16px;
-			}
-		</style>
-		<!-- script type="text/javascript" src="{% static '/js/jquery-3.5.1.js' %} "></script -->
-		<script type="text/javascript" src="../common_static/js/jquery-3.5.1.js "></script>
-		<script type="text/javascript">
-			// 提交的时候使用localstorage将用户名和密码存储到本地
-			function login(){
-				var nc=document.getElementsByName('nicheng')[0].value;
-				var mima=document.getElementById('mima').value;
-					
-				// 调用服务器的登陆接口来获取到分配给此次会话的唯一标识
-				// var huihua=login(nc)  // 需要到后端请求，使用jquery的ajax 
-				// 将获取到的标识存储到本地
-				localStorage.setItem('huihua',huihua)
-				localStorage.setItem('nicheng',nc);
-				localStorage.setItem('mima',mima);
-				// console.log('写入成功');
-				return true;
-			}
-
-			// 如果访问页面昵称存在就将昵称直接填写到位置
-			function jiazai(){
-				var nc=localStorage.getItem('nicheng');
-				// alert(nc);
-				if (nc){
-					document.getElementById('nicheng').value=nc;
-				}
-			}
-		</script>		
+		<link rel="stylesheet" type="text/css" href="{% static  '/css/login.css' %}" >
+		<script type="text/javascript" src="{% static '/js/login.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery-3.5.1.js' %}"></script>
 	</body>
 </html>

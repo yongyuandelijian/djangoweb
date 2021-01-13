@@ -17,11 +17,11 @@ from django.contrib import admin
 from django.urls import path,re_path
 from . import view
 
-# 解决daphne不识别静态文件的问题
+# 解决daphne不加载静态文件的问题
 from django.contrib.staticfiles.views import serve
 
-def return_static(request, path, insecure=True, **kwargs):
-  return serve(request, path, insecure, **kwargs)
+def return_static(request, path, insecure = True , ** kwargs):
+   return serve(request, path, insecure, ** kwargs)
 
 # 定义界面访问的路径和后台方法之间的对照关系
 urlpatterns = [
@@ -29,5 +29,5 @@ urlpatterns = [
     re_path(r'index',view.shouye,name='index'),
     path('zhuye', view.zhuye,name='zhuye'),
     path('admin/', admin.site.urls),
-    re_path(r'^static/(?P<path>.*)$', return_static, name='static'), # 添加这行
+    re_path(r'static/(?P<path>.*)$', return_static, name='static'), # 添加这行
 ]

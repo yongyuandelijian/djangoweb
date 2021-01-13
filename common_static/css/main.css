@@ -1,0 +1,110 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.zongti{
+    /*自身的样式*/
+    width: 50%;
+    margin: 5% auto;   /*上下距离10% 左右自动，这样就可以左右居中了*/
+    min-width: 500px;   /*最小宽度*/
+    min-height: 500px;
+    background-color: #e6e6e0;
+    border-radius: 3px;   /*圆角的半径*/
+    border: 1px solid rgb(194, 191, 191);
+    /*内部元素的布局*/
+    display: flex;
+    flex-direction: column;
+}
+.dingbu{
+    background-color: blueviolet;
+    margin: 0 auto;
+    width: 100%;
+    color: white;
+    height: 40px;
+    font-size: larger;
+    vertical-align: middle;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+.dingbu-left{
+    width: 90%;
+    height: 100%;
+    min-width: 450px;
+    margin: 5px;
+}
+.dingbu-right{
+    flex-grow: 1;
+    min-width: 50px;
+    height: 100%;
+    margin: 5px;
+}
+.zhuti{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+.zhuti-left{
+    border-right: 1px solid #d4e2e2;
+    width: 25%;
+    height: 100%;
+    min-width: 100px;
+    min-height: 500px;
+}
+.zhuti-right{
+    border-left: 1px solid #d4e2e2;
+    flex-grow: 1;   /*剩下空间全部占用*/
+    height: 100%;
+    min-width: 400px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+.zhuti-ys{
+    margin: 0;
+    width: 100%;
+    height: 60%;
+    min-height: 300px;
+    border-bottom: 1px solid #d4e2e2;
+}
+.zhuti-yx{
+    background-color: white;
+    flex-grow: 1;
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    border-radius: 3px;
+}
+.zhuti-yx2{
+    height: 30px;
+    color: rgb(177, 173, 173); padding: 2px;
+    font-size: large;
+}
+.zhuti-yx1{
+    padding: 5px;
+    width: 100%;
+    min-height: 150px;
+    border: none;
+    flex-grow: 1;
+}
+.input-message{
+    resize: none;
+    width: 99%;
+    height: 99%;
+    min-height: 150px;		
+    border: none;
+}
+.input-message:focus{
+    outline:none;
+}
+.btn-fs{
+    color: rgb(177, 173, 173);
+    float: right; 
+    border:1px solid gray ; 
+    border-radius: 5px; 
+    height: 30px; 
+    width: 50px; 
+    font-size: large;
+}

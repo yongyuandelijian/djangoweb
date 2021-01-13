@@ -67,6 +67,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            #添加这个可以不用在页面手动导入{% load static %}
+            'builtins' : [
+                'django.templatetags.static'
+            ],
         },
     },
 ]
@@ -137,5 +141,5 @@ STATIC_URL = '/static/'
 # 设置公共静态路径
 STATICFILES_DIRS = [
     # ...
-    os.path.join(BASE_DIR,"djangoproject/common_static"),
+    os.path.join(BASE_DIR,'common_static'),
 ]
